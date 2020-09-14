@@ -3,11 +3,10 @@ CREATE TABLE users (
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     email TEXT NOT NULL,
-    phone_number TEXT NOT NULL,
+    phone_number TEXT NOT NULL
 );
 
-ALTER TABLE user_orders(
+ALTER TABLE orders
     ADD COLUMN 
         user_id INTEGER REFERENCES users(id)
-        ON DELETE SET NULL
-);
+        ON DELETE SET NULL;

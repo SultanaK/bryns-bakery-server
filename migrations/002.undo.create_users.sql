@@ -1,4 +1,4 @@
-ALTER TABLE users_orders
-  DROP COLUMN IF EXISTS order_id;
+ALTER TABLE orders
+  DROP COLUMN IF EXISTS user_id;
 
 DROP TABLE IF EXISTS users CASCADE;
