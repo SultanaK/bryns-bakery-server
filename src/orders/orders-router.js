@@ -9,7 +9,7 @@ OrdersRouter
     .get((req, res, next) => {
         OrderService.getOrdersWithUser(req.app.get('db'))
         .then(orders => {
-            return res.status(200).json(orders.rows)
+            return res.status(200).json(orders)
         })
         .catch(next)
     })

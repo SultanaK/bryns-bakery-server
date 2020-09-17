@@ -12,7 +12,12 @@ const OrderService = {
     //works
     getOrdersWithUser(db){
         return db
-        .raw('SELECT users.id, first_name, last_name, email, phone_number, orders.id, readydate, completed, total FROM users INNER JOIN orders ON orders.user_id = users.id')
+        .from('users')
+        .select('*')
+        .innerJoin('orders', 'orders.user_id', 'users.id')
+        .returning('*')
+        .orderBy('users.id', 'desc')
+        // .raw('SELECT users.id, first_name, last_name, email, phone_number, orders.id, readydate, completed, total FROM users INNER JOIN orders ON orders.user_id = users.id')
     },
     //works
     getCompletedOrders(db){
@@ -22,6 +27,7 @@ const OrderService = {
         .innerJoin('orders', 'orders.user_id', 'users.id')
         .where('completed', true)
         .returning('*')
+        .orderBy('readydate', 'asc')
     },
     //works
     getUnfinishedOrders(db){
@@ -31,6 +37,7 @@ const OrderService = {
         .innerJoin('orders', 'orders.user_id', 'users.id')
         .where('completed', false)
         .returning('*')
+        .orderBy('readydate', 'asc')
     },
     //works
     insertUser(db, user){
@@ -74,7 +81,7 @@ const OrderService = {
         const dbUser = await OrderService.insertUser(db, user)
         const dbOrder = await OrderService.insertOrder(db, {...order, user_id: dbUser.id, completed: false})
         const dbItems = await OrderService.insertItems(db, items.map(x => ({...x, order_id: dbOrder.id})))
-        return {user, order: {...order, dbItems}}
+        return {dbUser, order: {...dbOrder, dbItems}}
     }
 
 }
