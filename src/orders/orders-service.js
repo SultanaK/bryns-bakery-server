@@ -17,7 +17,6 @@ const OrderService = {
         .innerJoin('orders', 'orders.user_id', 'users.id')
         .returning('*')
         .orderBy('users.id', 'desc')
-        // .raw('SELECT users.id, first_name, last_name, email, phone_number, orders.id, readydate, completed, total FROM users INNER JOIN orders ON orders.user_id = users.id')
     },
     //works
     getCompletedOrders(db){

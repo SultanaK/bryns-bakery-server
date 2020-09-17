@@ -53,7 +53,6 @@ OrdersRouter
         const { user_id } = req.body
         return OrderService.getCompletedOrders(req.app.get('db'), user_id)
             .then(completed => {
-                console.log(completed)
                 return res.status(200).json(completed)
             })
             .catch(next)
