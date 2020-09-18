@@ -2,10 +2,12 @@ const express = require('express')
 const jsonBodyParser = express.json()
 const OrdersRouter = express.Router()
 const OrderService = require('./orders-service')
+const { requireAuth } = require('../middleware/basic-auth')
 
 
 OrdersRouter
     .route('/')
+    .all(requireAuth)
     .get((req, res, next) => {
         OrderService.getOrdersWithUser(req.app.get('db'))
         .then(orders => {
@@ -44,6 +46,7 @@ OrdersRouter
 
 OrdersRouter
     .route('/completed')
+    .all(requireAuth)
     .get((req, res, next) => {
         OrderService.getCompletedOrders(req.app.get('db'))
         .then(orders => {
@@ -62,6 +65,7 @@ OrdersRouter
 
 OrdersRouter
     .route('/unfinished')
+    .all(requireAuth)
     .get((req, res, next) => {
         OrderService.getUnfinishedOrders(req.app.get('db'))
         .then(orders => {
@@ -72,6 +76,7 @@ OrdersRouter
     
 OrdersRouter
     .route('/items/:order_id')
+    .all(requireAuth)
     .get((req, res, next) => {
         OrderService.getAllItemsInAnOrder(req.app.get('db'), req.params.order_id)
         .then(items => {
