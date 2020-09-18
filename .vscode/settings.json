@@ -1,0 +1,6 @@
+{
+    "editor.suggest.showFunctions": false,
+    "editor.suggest.showProperties": false,
+    "editor.suggest.showModules": false,
+    "editor.suggest.showReferences": false
+}

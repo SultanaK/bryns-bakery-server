@@ -37,7 +37,9 @@ OrdersRouter
               })
         })
         
-        return OrderService.addOrder(req.app.get('db'), user, order, items).catch(next)
+        return OrderService.addOrder(req.app.get('db'), user, order, items)
+        .then(order => res.status(201).json(order))    
+        .catch(next)
     })
 
 OrdersRouter
