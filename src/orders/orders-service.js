@@ -69,7 +69,6 @@ const OrderService = {
         .from('orders')
         .update('completed')
         .where('user_id', id)
-        .set('completed', true)
         .returning('completed')
     },
     serializeOrder(order){ //need help 
