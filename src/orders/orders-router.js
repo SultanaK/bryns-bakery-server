@@ -2,13 +2,12 @@ const express = require('express')
 const jsonBodyParser = express.json()
 const OrdersRouter = express.Router()
 const OrderService = require('./orders-service')
-const { requireAuth } = require('../middleware/basic-auth')
+const { requireAuth } = require('../middleware/jwt-auth')
 
 
 OrdersRouter
     .route('/')
-    .all(requireAuth)
-    .get((req, res, next) => {
+    .get(requireAuth, (req, res, next) => {
         OrderService.getOrdersWithUser(req.app.get('db'))
         .then(orders => {
             return res.status(200).json(orders)
@@ -56,7 +55,7 @@ OrdersRouter
     })
     .post(jsonBodyParser, (req, res , next) => {
         const { user_id } = req.body
-        return OrderService.getCompletedOrders(req.app.get('db'), user_id)
+        return OrderService.completeOrder(req.app.get('db'), user_id)
             .then(completed => {
                 return res.status(200).json(completed)
             })

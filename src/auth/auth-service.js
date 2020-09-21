@@ -3,15 +3,20 @@ const jwt = require('jsonwebtoken')
 const config = require('../config')
 
 const AuthService = {
-    compareAdminUserName(db, user_name) {
-      return db('admin')
-        .where({ user_name })
+  getAdminWithName(db, name) {
+    return db('admins')
+      .where({ name })
+      .first()
+  },
+    compareAdminUserName(db, name) {
+      return db('admins')
+        .where({ name })
         .first()
     },
     comparePasswords(password, hash){
       return bcrypt.compare(password, hash)
     },
-    createJWT(subject, payload){ //why do we need jwt at all
+    createJWT(subject, payload){ 
       return jwt.sign(payload, config.JWT_SECRET, {
         subject,
         expiresIn: config.JWT_EXPIRY,
@@ -26,7 +31,7 @@ const AuthService = {
     parseBasicToken(token) {
       return Buffer
         .from(token, 'base64')
-        .toString()
+        .toString('')
         .split(':')
     },
   }
