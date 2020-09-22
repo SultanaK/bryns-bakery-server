@@ -2,7 +2,7 @@ const express = require('express')
 const jsonBodyParser = express.json()
 const OrdersRouter = express.Router()
 const OrderService = require('./orders-service')
-const { requireAuth } = require('./middleware/jwt-auth')
+const { requireAuth } = require('../middleware/jwt-auth')
 
 
 OrdersRouter
