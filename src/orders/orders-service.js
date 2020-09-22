@@ -65,9 +65,10 @@ const OrderService = {
         .then(rows => rows[0])
     },
     completeOrder(db, id){ //need help with this function 
-        return db('orders')
+       return db('orders')
         .where('user_id', id)
         .update('completed', true)
+        .returning('*')
     },
     serializeOrder(order){ //need help 
         return order.map(this.serializeOrder)
