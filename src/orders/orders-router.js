@@ -39,7 +39,9 @@ OrdersRouter
         })
         
         return OrderService.addOrder(req.app.get('db'), user, order, items)
-        .then(order => res.status(201).json(order))    
+        .then(order => {
+            OrderService.sendConfimationEmail(order)
+            return res.status(201).json(order)})    
         .catch(next)
     })
 
@@ -57,7 +59,7 @@ OrdersRouter
         const { user_id } = req.body
         return OrderService.completeOrder(req.app.get('db'), user_id)
             .then(completed => {
-                console.log('hey')
+                OrderService.sendCompletedEmail(req.app.get('db'), completed)
                 return res.status(200).json(completed)
             })
             .catch(next)
