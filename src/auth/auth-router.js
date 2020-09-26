@@ -16,7 +16,7 @@ authRouter
         }
     }
 
-    authService.compareAdminUserName(req.app.get('db'), loginUser.name)
+    authService.getAdminWithName(req.app.get('db'), loginUser.name)
         .then(user => {
             if(!user){
                 return res.status(400).json({

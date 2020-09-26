@@ -98,7 +98,6 @@ const OrderService = {
           .sendMail(message)
           .then((res) => res)
           .catch((error) => console.error(error));      
-  
 
     },
     //works
@@ -108,7 +107,7 @@ const OrderService = {
                 name: order.dbUser.first_name,
                 intro: [`Thank you for your order!`, `We are looking it over and if we have any question we will reach out to you!
                 You will recieve an email once your order is ready!`],
-                signature: 'Cheers!'
+                signature: 'Cheers'
             }
         }
 
